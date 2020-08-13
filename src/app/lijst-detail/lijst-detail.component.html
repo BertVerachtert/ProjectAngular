@@ -1,0 +1,46 @@
+<div class="container" *ngIf="lijst">
+    <h1 class="text-center">Lijst: {{lijst.naam}}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Antwoord</th>
+                <th scope="col">Beschrijving</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Stem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of lijst.items; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td style="white-space: nowrap;">{{item.antwoord}}</td>
+                <td>{{item.beschrijvingAntwoord}}</td>
+                <td *ngIf="item.foto == ''" style="white-space: nowrap;">Geen foto</td>
+                <td *ngIf="item.foto != ''">
+                    <div style="width: 125px;">
+                        <img src="{{item.foto}}" style="max-width: 100%; height: auto;">
+                    </div>
+                </td>
+                <td>
+                    <input class="form-check-input" id="{{item.antwoord}}" type="radio" value="{{item.itemID}}" name="item" (change)="addStem(item.itemID)">
+                    <label for="{{item.antwoord}}">Stem</label>
+                </td>
+            </tr>
+        </tbody>        
+    </table>
+    <div class="row" *ngIf="voorbij && bezig && !alGestemd">
+        <button class="btn btn-lg btn-primary mx-auto" (click)="stemLijst()">Stem op deze lijst</button>
+    </div>
+    <p *ngIf="!voorbij" class="pt-2">
+        <ngb-alert [dismissible]="false" class="alert alert-danger">Deze lijst was afgelopen op: {{ lijst.eindDatum | date:'dd-MM-yyyy' }}.</ngb-alert>
+    </p>
+    <p *ngIf="!bezig" class="pt-2">
+        <ngb-alert [dismissible]="false" class="alert alert-danger">Deze lijst begint op: {{ lijst.startDatum | date:'dd-MM-yyyy' }}.</ngb-alert>
+    </p>
+    <p *ngIf="leeg" class="pt-2">
+        <ngb-alert [dismissible]="false" class="alert alert-danger">Geen antwoord aangeduid.</ngb-alert>
+    </p>
+    <p *ngIf="alGestemd" class="pt-2">
+        <ngb-alert [dismissible]="false" class="alert alert-danger">Je hebt hier al opgestemd.</ngb-alert>
+    </p>
+</div>

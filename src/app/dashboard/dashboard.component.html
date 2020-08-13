@@ -1,0 +1,42 @@
+<div class="container" *ngIf="BeheerderLijst">
+    <h1 class="text-center">Dashboard</h1>
+    <h3 class="text-center">Jouw gemaakte lijsten <button class="btn btn-primary rounded-pill float-right" [routerLink]="'/nieuwelijst'">Nieuwe lijst</button></h3>
+        <div *ngIf="BeheerderLijst.length == 0">
+            <p class="text-center">Je hebt nog geen lijsten gemaakt.</p>
+        </div>
+        <div *ngIf="BeheerderLijst.length != 0" class="row">
+            <div *ngFor="let i of BeheerderLijst; let k = index" class="mx-auto">
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5>{{ i.naam }}</h5>                            
+                            <h6 class="card-subtitle mb-2 text-muted">{{ i.startDatum | date:'dd-MM-yyyy' }} - {{ i.eindDatum | date:'dd-MM-yyyy' }}</h6>
+                            <button *ngIf="checkEindDatum(i.eindDatum)" class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="resultLijst(i.lijstID)">Results</button><button *ngIf="checkStartDatum(i.startDatum, i.eindDatum)" class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="editLijst(i.lijstID)">Edit</button>
+                            <p class="card-text">{{ i.beschrijving }}</p>
+                        </div>
+                    </div>
+                </div>
+                <br *ngIf="k % 3 === 0">
+            </div>
+        </div>
+    <h3 class="text-center pt-2">Lijsten waarop je hebt gestemd</h3>
+        <div *ngIf="UStemmen.length == 0">
+            <p class="text-center">Je hebt op nog geen van de bestaande lijsten gestemd.</p>
+        </div>
+        <div *ngIf="UStemmen.length != 0" class="row">
+            <div *ngFor="let i of UStemmen; let o = index" class="mx-auto">
+                <div  class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5>{{ i.item.lijst.naam }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ i.item.lijst.startDatum | date:'dd-MM-yyyy' }} - {{ i.item.lijst.eindDatum | date:'dd-MM-yyyy' }}</h6>
+                            <p class="card-text">{{ i.item.lijst.beschrijving }}</p>
+                            <div class="dropdown-divider"></div>
+                            <p>Jouw Stem: {{ i.item.antwoord }}</p>
+                        </div>
+                    </div>
+                </div>
+                <br *ngIf="o % 3 === 0">
+            </div>            
+        </div>
+</div>

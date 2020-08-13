@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" routerLink=""><img src="../../assets/images/logo.png" style="width: 50px; height: 40px;"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/alleLijsten">Lijsten</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0" [formGroup]="zoekForm" (ngSubmit)="zoekLijst()">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Zoek" aria-label="Search" formControlName="zoekString">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zoek</button>
+                </form>
+            </li>
+            <li class="nav-item" *ngIf="loggedin == false">
+                <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedin == false">
+                <a class="nav-link" routerLink="/register">Register</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedin == true">
+                <a class="nav-link btn" routerLink="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedin == true">
+                <a class="nav-link btn" (click)="logoff()">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="text-center">
+        <br>
+        <h1>Welkom op Rock 'n Vote!</h1>
+        <p class="text-muted">
+            Laat je mening tellen! Op deze website kan je stemmen op de lijsten die jij interessant vindt. Wij geven om jouw mening!
+        </p>
+        <br>
+    </div>
+    <div class="text-center">
+        <h3>Voorgestelde lijsten</h3>
+        <p class="text-muted">
+            Hier zijn enkele voorgestelde lijsten.
+        </p>
+    </div>
+    <div>
+        <div *ngFor="let item of lijsten; let i = index" >
+            <div *ngIf="i<5">
+                <div class="card mb-2 mx-auto" style="width: 24rem;">
+                    <div class="card-body">
+                        <h5>{{ item.naam }}<button class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="bekijkLijst(item.lijstID)">Bekijk</button></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ item.startDatum | date:'dd-MM-yyyy' }} - {{ item.eindDatum | date:'dd-MM-yyyy' }}</h6>
+                        <p class="card-text">{{ item.beschrijving }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

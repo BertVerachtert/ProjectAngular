@@ -1,0 +1,89 @@
+<div class="container" *ngIf="lijst">
+    <h1 class="text-center">Lijst: {{lijst.naam}}<button *ngIf="begonnen" class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="stopLijst()">Stop lijst</button><button *ngIf="!begonnen" class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="startLijst()">Start lijst</button></h1>
+    <table class="table" *ngIf="begonnen">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Antwoord</th>
+                <th scope="col">Beschrijving</th>
+                <th scope="col">Foto</th>
+                <th scope="col" class="text-center" style="white-space: nowrap;">Aantal Stemmen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of lijst.items; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td style="white-space: nowrap;">{{item.antwoord}}</td>
+                <td>{{item.beschrijvingAntwoord}}</td>
+                <td *ngIf="item.foto == ''" style="white-space: nowrap;">Geen foto</td>
+                    <td *ngIf="item.foto != ''">
+                        <div style="width: 80px;">
+                            <img src="{{item.foto}}" style="max-width: 100%; height: auto;">
+                        </div>
+                    </td>
+                <td class="text-center">
+                    {{item.stems.length}}
+                </td>
+            </tr>
+        </tbody>     
+    </table>
+    <div *ngIf="!begonnen">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Antwoord</th>
+                    <th scope="col">Beschrijving</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col" class="text-center" style="white-space: nowrap;">Verwijderen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lijst.items; let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td style="white-space: nowrap;">{{item.antwoord}}</td>
+                    <td>{{item.beschrijvingAntwoord}}</td>
+                    <td *ngIf="item.foto == ''" style="white-space: nowrap;">Geen foto</td>
+                    <td *ngIf="item.foto != ''">
+                        <div style="width: 80px;">
+                            <img src="{{item.foto}}" style="max-width: 100%; height: auto;">
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-md btn-danger" type="button" (click)="deleteItem(item.itemID)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button *ngIf="!begonnen" class="btn btn-md btn-danger mt-2 mb-2" type="button" (click)="deleteLijst(lijst.lijstID)">Delete lijst</button>
+        </div>
+        <div>
+            <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+                <div class="card mx-auto" style="width: 40rem;">
+                    <div class="card-body">
+                        <h3 class="text-center">Nieuw antwoord</h3>
+                        <div class="form-label-group">
+                            <label for="inputAntwoord" class="font-weight-bold">Antwoord *</label>
+                            <input type="text" id="inputAntwoord" class="form-control" placeholder="Antwoord" required formControlName="antwoord"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputABeschrijving" class="font-weight-bold">Beschrijving atnwoord *</label>
+                            <textarea class="form-control" id="inputABeschrijving" placeholder="Beschrijving" required rows="3" formControlName="beschrijvingAntwoord"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAFoto" class="font-weight-bold">Foto</label><br>
+                            <input id="inputAFoto" type="file" (change)="upload($event)" accept=".png, .jpg" formControlName="foto"/>
+                        </div>
+                        <div class="form-label-group pt-2">
+                            <button class="btn btn btn-primary btn-block text-uppercase w-25 mx-auto" type="submit" [disabled]="!itemForm.valid">Voeg item toe</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary mt-2" [routerLink]="'/dashboard'">Terug</button>
+    </div>
+</div>

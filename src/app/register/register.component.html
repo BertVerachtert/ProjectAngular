@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card my-5">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Registreer</h4>
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+                        <div class="form-label-group">
+                            <label for="inputGebruikersnaam" class="font-weight-bold">Gebruikersnaam *</label>
+                            <input type="text" id="inputGebruikersnaam" class="form-control" placeholder="Gebruikersnaam" required formControlName="gebruikersnaam"/>
+                        </div>
+                        <div class="form-label-group">
+                            <label for="inputEmail" class="font-weight-bold">Email *</label>
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email" required formControlName="email"/>
+                        </div>
+                        <div class="form-label-group pt-1">
+                            <label for="inputWachtwoord" class="font-weight-bold">Wachtwoord *(min 6 tekens)</label>
+                            <input type="password" id="inputWachtwoord" class="form-control" placeholder="Wachtwoord" required formControlName="wachtwoord"/>
+                        </div>
+                        <div class="form-label-group pt-1">
+                            <label for="inputWachtwoordH" class="font-weight-bold">Herhaling wachtwoord *(min 6 tekens)</label>
+                            <input type="password" id="inputWachtwoordH" class="form-control" placeholder="Wachtwoord" required formControlName="wachtwoordH"/>
+                        </div>
+                        <div class="form-label-group pt-2">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!registerForm.valid || submitted">Registreer</button>
+                        </div>
+                    </form>
+                    <p *ngIf="registerStatus" class="pt-3">
+                        <ngb-alert [dismissible]="false" class="alert alert-danger">Wachtwoorden komen niet overeen.</ngb-alert>
+                    </p>
+                    <p *ngIf="ingebruikNaam" class="pt-3">
+                        <ngb-alert [dismissible]="false" class="alert alert-danger">Gebruikersnaam bestaat al.</ngb-alert>
+                    </p>
+                    <p *ngIf="ingebruikEmail" class="pt-3">
+                        <ngb-alert [dismissible]="false" class="alert alert-danger">Email wordt al gebruikt.</ngb-alert>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

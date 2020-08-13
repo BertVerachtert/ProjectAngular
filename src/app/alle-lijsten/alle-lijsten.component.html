@@ -1,0 +1,24 @@
+<div class="container" *ngIf="lijsten">
+    <h1 class="text-center">Alle lijsten</h1>
+    <div *ngIf="lijsten.length == 0">
+        <p class="text-center">Er zijn nog geen lijsten aangemaakt.</p>
+    </div>
+    <div *ngIf="lijsten.length != 0" class="row">
+        <div *ngFor="let item of lijsten | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let k = index" class="mx-auto">
+            <div class="col">
+                <div class="card" style="width: 24rem;">
+                    <div class="card-body">
+                        <h5>{{ item.naam }}<button class="btn btn-md btn-primary mt-2 float-right" type="button" (click)="bekijkLijst(item.lijstID)">Bekijk</button></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ item.startDatum | date:'dd-MM-yyyy' }} - {{ item.eindDatum | date:'dd-MM-yyyy' }}</h6>
+                        <p class="card-text">{{ item.beschrijving }}</p>
+                    </div>
+                </div>
+            </div>
+            <br *ngIf="k % 2 === 0">
+        </div>
+    </div>
+        <ngb-pagination class="d-flex justify-content-center" [collectionSize]="lijsten.length" [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+        </ngb-pagination>
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+    <h1 class="text-center">Maak een nieuwe lijst</h1>
+    <form [formGroup]="createLijstForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="card mx-auto" style="width: 40rem;">
+            <div class="card-body">
+                <div class="form-label-group">
+                    <label for="inputTitel" class="font-weight-bold">Titel *(minstens 6 karakters)</label>
+                    <input type="text" id="inputTitel" class="form-control" placeholder="Titel" required minlength="6" formControlName="titel"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputBeschrijving" class="font-weight-bold">Beschrijving *</label>
+                    <textarea class="form-control" id="inputBeschrijving" placeholder="Beschrijving" required rows="3" formControlName="beschrijving"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputStartdatum" class="font-weight-bold">Startdatum *</label>
+                    <input type="date" id="inputStartdatum" class="form-control" required formControlName="startDatum"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputEinddatum" class="font-weight-bold">Einddatum *</label>
+                    <input type="date" id="inputEinddatum" class="form-control" required formControlName="eindDatum"/>
+                </div>
+            </div>
+        </div>
+        <h3 class="text-center">Antwoorden</h3>
+        <div formArrayName="items">
+            <div class="mx-auto" style="width: 40rem;">
+                <div class="card mt-2" *ngFor="let item of itemFormGroup.controls; let i = index" [formGroupName]="i">
+                    <div class="card-body">
+                        <h4>Antwoord {{i + 1}}<button class="btn btn-md btn-danger float-right" type="button" (click)="verwijderOptie(i)">Verwijder</button></h4>               
+                        <div class="form-group">
+                            <label for="inputAntwoord{{i}}" class="font-weight-bold">Antwoord *</label>
+                            <input type="text" class="form-control" id="inputAntwoord{{i}}" placeholder="Antwoord {{i + 1}}" formControlName="antwoord" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputABeschrijving{{i}}" class="font-weight-bold">Beschrijving *</label>
+                            <textarea class="form-control" id="inputABeschrijving{{i}}" placeholder="Beschrijving" formControlName="beschrijvingAntwoord" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAFoto{{i}}" class="font-weight-bold">Foto</label><br>
+                            <input id="inputAFoto{{i}}" type="file" (change)="upload($event, i)" accept=".png, .jpg" formControlName="foto"/>
+                        </div>       
+                    </div>
+                </div>
+                <button class="btn btn-md btn-success mt-2" type="button" (click)="nieuwOptie()">Nieuwe optie</button>
+            </div>
+            
+        </div>
+        <div class="form-label-group pt-2">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase w-25 mx-auto" type="submit" [disabled]="!createLijstForm.valid">Creëer lijst</button>
+        </div>
+        <p *ngIf="datumKloptNiet" class="pt-3 mx-auto" style="width: 40rem;">
+            <ngb-alert [dismissible]="false" class="alert alert-danger">Startdatum is later dan einddatum</ngb-alert>
+        </p>
+    </form>
+</div>
